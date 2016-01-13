@@ -71,7 +71,15 @@ func catalogueSubmit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//保存文档
-	err = p.Doc.Save()
+	if p.Doc.Id > 0 {
+		err = p.Doc.Update()
+		if err == nil {
+			err = model.DeleteParameters(p.Doc.Id)
+		}
+	} else {
+		err = p.Doc.Save()
+	}
+
 	if err != nil {
 		w.Write(ToJson(err))
 		return
