@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2016-01-11 18:18:53
+Date: 2016-01-13 18:17:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,7 +41,18 @@ CREATE TABLE `doc` (
   `name` varchar(255) NOT NULL,
   `serial_number` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for err_code
+-- ----------------------------
+DROP TABLE IF EXISTS `err_code`;
+CREATE TABLE `err_code` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) NOT NULL COMMENT '错误代码',
+  `description_text` text NOT NULL COMMENT '描述',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for parameters
@@ -58,4 +69,14 @@ CREATE TABLE `parameters` (
   `length` varchar(11) NOT NULL,
   `serial_number` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for update_log
+-- ----------------------------
+DROP TABLE IF EXISTS `update_log`;
+CREATE TABLE `update_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description_text` text NOT NULL COMMENT '更新说明',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
