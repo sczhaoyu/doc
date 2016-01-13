@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/sczhaoyu/doc/model"
 	"net/http"
+	"strconv"
 )
 
 func saveErrCode(w http.ResponseWriter, r *http.Request) {
@@ -14,7 +15,12 @@ func saveErrCode(w http.ResponseWriter, r *http.Request) {
 		w.Write(ToJson(err))
 		return
 	}
-	err = c.Save()
+	if c.Id > 0 {
+		err = c.Update()
+	} else {
+		err = c.Save()
+	}
+
 	w.Write(ToJson(err))
 }
 func updateErrCode(w http.ResponseWriter, r *http.Request) {
@@ -35,4 +41,11 @@ func getErrCodeAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Write(ToJson(ret))
+}
+func deleteErrCode(w http.ResponseWriter, r *http.Request) {
+	eid, _ := strconv.ParseInt(r.FormValue("eid"), 10, 64)
+	var e model.ErrCode
+	e.Id = eid
+	err := e.Delete()
+	w.Write(ToJson(err))
 }

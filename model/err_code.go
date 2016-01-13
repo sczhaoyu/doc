@@ -6,7 +6,7 @@ import (
 )
 
 type ErrCode struct {
-	Id              int64  `json:"id"`
+	Id              int64  `json:"errCodeid"`
 	Code            string `json:"code"`            //错误代码
 	DescriptionText string `json:"descriptionText"` //描述
 }
