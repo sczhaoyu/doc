@@ -17,4 +17,7 @@ func steupRoutes() {
 	http.HandleFunc("/err/code/update", updateErrCode)
 	http.HandleFunc("/err/code/all", getErrCodeAll)
 	http.HandleFunc("/err/code/delete", deleteErrCode)
+	http.HandleFunc("/explain/submit", explainSubmit)
+	http.HandleFunc("/explain/find", explainFind)
+	http.HandleFunc("/explain/delete", explainDelete)
 }

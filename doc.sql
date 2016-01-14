@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2016-01-13 18:17:29
+Date: 2016-01-14 13:39:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -53,6 +53,19 @@ CREATE TABLE `err_code` (
   `description_text` text NOT NULL COMMENT '描述',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for explain
+-- ----------------------------
+DROP TABLE IF EXISTS `explain`;
+CREATE TABLE `explain` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL COMMENT '标题',
+  `description_text` text NOT NULL COMMENT '描述',
+  `user_name` varchar(255) NOT NULL COMMENT '发布人',
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for parameters
