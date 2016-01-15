@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/sczhaoyu/doc/model"
 	"net/http"
 	"strconv"
@@ -16,10 +17,19 @@ func updateParameter(w http.ResponseWriter, r *http.Request) {
 		w.Write(ToJson(err))
 		return
 	}
+
 	err = p.Update()
 	if err != nil {
 		w.Write(ToJson(err))
 		return
+	}
+	doc, err := model.GetDocById(p.DocId)
+	if err == nil {
+		pt := "请求参数"
+		if p.PrmType == 1 {
+			pt = "响应参数"
+		}
+		model.AddUpdateLog(fmt.Sprintf("文档【%s】【%s】参数被修改,参数编号【%s】", doc.Name, pt, p.SerialNumber))
 	}
 	w.Write(ToJson("success"))
 

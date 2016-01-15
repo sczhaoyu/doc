@@ -27,7 +27,7 @@ func SaveParameters(ret []Parameters) error {
 }
 func FindParametersByDocId(docId int64) ([]Parameters, error) {
 	var ret []Parameters
-	err := DocDB.Where("doc_id=?", docId).Find(&ret)
+	err := DocDB.OrderBy("(serial_number+0)  asc").Where("doc_id=?", docId).Find(&ret)
 	if err != nil {
 		return nil, err
 	}

@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/sczhaoyu/doc/model"
 	"net/http"
 	"strconv"
@@ -18,9 +19,15 @@ func explainSubmit(w http.ResponseWriter, r *http.Request) {
 	}
 	if e.Id > 0 {
 		err = e.Update()
+		if err == nil {
+			model.AddUpdateLog(fmt.Sprintf("修改文章【%s】", e.Title))
+		}
 	} else {
 		e.CreatedAt = time.Now().Local()
 		err = e.Save()
+		if err == nil {
+			model.AddUpdateLog(fmt.Sprintf("增加文章【%s】", e.Title))
+		}
 	}
 
 	w.Write(ToJson(err))
@@ -36,8 +43,14 @@ func explainFind(w http.ResponseWriter, r *http.Request) {
 
 func explainDelete(w http.ResponseWriter, r *http.Request) {
 	eid, _ := strconv.ParseInt(r.FormValue("eid"), 10, 64)
-	var e model.Explain
-	e.Id = eid
-	err := e.Delete()
+	ret, err := model.GetExplainById(eid)
+	if err != nil {
+		w.Write(ToJson(err))
+		return
+	}
+	err = ret.Delete()
+	if err == nil {
+		model.AddUpdateLog(fmt.Sprintf("删除文章【%s】", ret.Title))
+	}
 	w.Write(ToJson(err))
 }

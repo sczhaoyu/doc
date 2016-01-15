@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/sczhaoyu/doc/model"
 	"net/http"
 	"strconv"
@@ -17,8 +18,14 @@ func saveErrCode(w http.ResponseWriter, r *http.Request) {
 	}
 	if c.Id > 0 {
 		err = c.Update()
+		if err == nil {
+			model.AddUpdateLog(fmt.Sprintf("修改错误代码【%s:%s】", c.Code, c.DescriptionText))
+		}
 	} else {
 		err = c.Save()
+		if err == nil {
+			model.AddUpdateLog(fmt.Sprintf("增加错误代码【%s:%s】", c.Code, c.DescriptionText))
+		}
 	}
 
 	w.Write(ToJson(err))
@@ -32,6 +39,9 @@ func updateErrCode(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	err = c.Update()
+	if err == nil {
+		model.AddUpdateLog(fmt.Sprintf("修改错误代码【%s:%s】", c.Code, c.DescriptionText))
+	}
 	w.Write(ToJson(err))
 }
 func getErrCodeAll(w http.ResponseWriter, r *http.Request) {
@@ -44,8 +54,12 @@ func getErrCodeAll(w http.ResponseWriter, r *http.Request) {
 }
 func deleteErrCode(w http.ResponseWriter, r *http.Request) {
 	eid, _ := strconv.ParseInt(r.FormValue("eid"), 10, 64)
-	var e model.ErrCode
-	e.Id = eid
-	err := e.Delete()
+	ret, err := model.GetErrCodeById(eid)
+	if err != nil {
+		w.Write(ToJson(err))
+		return
+	}
+	err = ret.Delete()
+	model.AddUpdateLog(fmt.Sprintf("删除错误代码【%s】", ret.Code))
 	w.Write(ToJson(err))
 }

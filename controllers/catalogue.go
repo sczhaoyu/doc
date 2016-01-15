@@ -74,9 +74,12 @@ func catalogueSubmit(w http.ResponseWriter, r *http.Request) {
 	if p.Doc.Id > 0 {
 		err = p.Doc.Update()
 		if err == nil {
+			//添加操作日志
+			model.AddUpdateLog("修改文档【" + p.Doc.Name + ":" + p.Doc.SerialNumber + "】")
 			err = model.DeleteParameters(p.Doc.Id)
 		}
 	} else {
+		model.AddUpdateLog("增加文档【" + p.Doc.Name + ":" + p.Doc.SerialNumber + "】")
 		err = p.Doc.Save()
 	}
 
@@ -86,11 +89,13 @@ func catalogueSubmit(w http.ResponseWriter, r *http.Request) {
 	}
 	var prm []model.Parameters = make([]model.Parameters, 0, len(p.ReqParameters)+len(p.RspParameters))
 	for i := 0; i < len(p.RspParameters); i++ {
+		p.RspParameters[i].Id = 0
 		p.RspParameters[i].PrmType = 1
 		p.RspParameters[i].DocId = p.Doc.Id
 		prm = append(prm, p.RspParameters[i])
 	}
 	for i := 0; i < len(p.ReqParameters); i++ {
+		p.ReqParameters[i].Id = 0
 		p.ReqParameters[i].PrmType = 0
 		p.ReqParameters[i].DocId = p.Doc.Id
 		prm = append(prm, p.ReqParameters[i])

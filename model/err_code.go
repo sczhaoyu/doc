@@ -39,7 +39,7 @@ func (e *ErrCode) Update() error {
 }
 func FindErrCode() ([]ErrCode, error) {
 	var ret []ErrCode
-	err := DocDB.Asc("code").Find(&ret)
+	err := DocDB.OrderBy("(code+0) asc").Find(&ret)
 	if err != nil {
 		return nil, err
 	}
