@@ -18,7 +18,7 @@ type Doc struct {
 
 func FindDoc(catalogueId int64) ([]Doc, error) {
 	var ret []Doc
-	err := DocDB.Where("catalogue_id=?", catalogueId).Find(&ret)
+	err := DocDB.OrderBy("(serial_number+0)  asc").Where("catalogue_id=?", catalogueId).Find(&ret)
 	if err != nil {
 		return nil, err
 	}
