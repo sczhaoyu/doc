@@ -1,19 +1,32 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : hj
-Source Server Version : 50616
-Source Host           : 10.0.0.252:3306
+Source Server         : 惠居测试数据库
+Source Server Version : 50173
+Source Host           : 101.201.150.0:3306
 Source Database       : doc
 
 Target Server Type    : MYSQL
-Target Server Version : 50616
+Target Server Version : 50173
 File Encoding         : 65001
 
-Date: 2016-01-14 13:39:48
+Date: 2016-01-15 14:37:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for account
+-- ----------------------------
+DROP TABLE IF EXISTS `account`;
+CREATE TABLE `account` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `account` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `nick_name` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for catalogue
@@ -25,7 +38,7 @@ CREATE TABLE `catalogue` (
   `name` varchar(255) NOT NULL COMMENT '目录名称',
   `serial_number` varchar(255) NOT NULL COMMENT '序号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='文档目录';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='文档目录';
 
 -- ----------------------------
 -- Table structure for doc
@@ -41,7 +54,7 @@ CREATE TABLE `doc` (
   `name` varchar(255) NOT NULL,
   `serial_number` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for err_code
@@ -52,7 +65,7 @@ CREATE TABLE `err_code` (
   `code` varchar(255) NOT NULL COMMENT '错误代码',
   `description_text` text NOT NULL COMMENT '描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for explain
@@ -65,7 +78,7 @@ CREATE TABLE `explain` (
   `user_name` varchar(255) NOT NULL COMMENT '发布人',
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for parameters
@@ -82,7 +95,7 @@ CREATE TABLE `parameters` (
   `length` varchar(11) NOT NULL,
   `serial_number` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for update_log
@@ -91,5 +104,6 @@ DROP TABLE IF EXISTS `update_log`;
 CREATE TABLE `update_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `description_text` text NOT NULL COMMENT '更新说明',
+  `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
