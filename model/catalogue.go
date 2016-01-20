@@ -10,12 +10,14 @@ type Catalogue struct {
 	ParentId     int64  `json:"parentId"`     //父目录，没有为0
 	Name         string `json:"name"`         //目录名称
 	SerialNumber string `json:"serialNumber"` //序号
+	ProjectId    int64  `json:"projectId"`    //项目的ID
+	VersionId    int64  `json:"versionId"`    //版本的ID
 }
 
 //获取全部父目录
-func FindCatalogueAllParent() ([]Catalogue, error) {
+func FindCatalogueAllParent(projectId, versionId int64) ([]Catalogue, error) {
 	var ret []Catalogue
-	err := DocDB.Where("parent_id=?", 0).Find(&ret)
+	err := DocDB.Where("parent_id=? and project_id=? and version_id=?", 0, projectId, versionId).Find(&ret)
 	if err != nil {
 		return nil, err
 	}
@@ -23,9 +25,9 @@ func FindCatalogueAllParent() ([]Catalogue, error) {
 }
 
 //获取子目录
-func FindFindCatalogueByParent(catalogueId int64) ([]Catalogue, error) {
+func FindFindCatalogueByParent(projectId, versionId, catalogueId int64) ([]Catalogue, error) {
 	var ret []Catalogue
-	err := DocDB.Where("parent_id=?", catalogueId).Find(&ret)
+	err := DocDB.Where("parent_id=?  and project_id=? and version_id=?", catalogueId, projectId, versionId).Find(&ret)
 	if err != nil {
 		return nil, err
 	}

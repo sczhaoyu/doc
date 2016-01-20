@@ -20,13 +20,13 @@ func explainSubmit(w http.ResponseWriter, r *http.Request) {
 	if e.Id > 0 {
 		err = e.Update()
 		if err == nil {
-			model.AddUpdateLog(fmt.Sprintf("修改文章【%s】", e.Title))
+			model.AddUpdateLog(fmt.Sprintf("修改文章【%s】", e.Title), e.ProjectId, e.VersionId)
 		}
 	} else {
 		e.CreatedAt = time.Now().Local()
 		err = e.Save()
 		if err == nil {
-			model.AddUpdateLog(fmt.Sprintf("增加文章【%s】", e.Title))
+			model.AddUpdateLog(fmt.Sprintf("增加文章【%s】", e.Title), e.ProjectId, e.VersionId)
 		}
 	}
 
@@ -50,7 +50,7 @@ func explainDelete(w http.ResponseWriter, r *http.Request) {
 	}
 	err = ret.Delete()
 	if err == nil {
-		model.AddUpdateLog(fmt.Sprintf("删除文章【%s】", ret.Title))
+		model.AddUpdateLog(fmt.Sprintf("删除文章【%s】", ret.Title), ret.ProjectId, ret.VersionId)
 	}
 	w.Write(ToJson(err))
 }

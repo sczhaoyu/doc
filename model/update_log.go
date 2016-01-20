@@ -10,16 +10,20 @@ type UpdateLog struct {
 	Id              int64     `json:"id"`
 	DescriptionText string    `json:"descriptionText"` //更新说明
 	CreatedAt       time.Time `json:"createdAt"`       //添加时间
+	ProjectId       int64     `json:"projectId"`       //项目的ID
+	VersionId       int64     `json:"versionId"`       //版本的ID
 }
 
 func (u *UpdateLog) Save() error {
 	_, err := DocDB.Insert(u)
 	return err
 }
-func AddUpdateLog(txt string) {
+func AddUpdateLog(txt string, projectId, versionId int64) {
 	var l UpdateLog
 	l.CreatedAt = time.Now().Local()
 	l.DescriptionText = txt
+	l.ProjectId = projectId
+	l.VersionId = versionId
 	DocDB.Insert(&l)
 }
 func (u *UpdateLog) Delete() error {
@@ -45,9 +49,9 @@ func (u *UpdateLog) Update() error {
 }
 
 //只显示最新的50条
-func FindUpdateLog() ([]UpdateLog, error) {
+func FindUpdateLog(projectId int64) ([]UpdateLog, error) {
 	var ret []UpdateLog
-	err := DocDB.Desc("created_at").Limit(50, 0).Find(&ret)
+	err := DocDB.Where("project_id=?", projectId).Desc("created_at").Limit(50, 0).Find(&ret)
 	if err != nil {
 		return nil, err
 	}

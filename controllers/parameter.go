@@ -29,7 +29,7 @@ func updateParameter(w http.ResponseWriter, r *http.Request) {
 		if p.PrmType == 1 {
 			pt = "响应参数"
 		}
-		model.AddUpdateLog(fmt.Sprintf("文档【%s】【%s】参数被修改,参数编号【%s】", doc.Name, pt, p.SerialNumber))
+		model.AddUpdateLog(fmt.Sprintf("文档【%s】【%s】参数被修改,参数编号【%s】", doc.Name, pt, p.SerialNumber), doc.ProjectId, doc.VersionId)
 	}
 	w.Write(ToJson("success"))
 

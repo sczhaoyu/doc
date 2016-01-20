@@ -31,6 +31,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 		<link href="` + css + `" rel="stylesheet"/>
 		<script>
 		   var user=` + j + `;
+		   var pro={projectId:0,name:""};
+		   var version={versionId:0,version:""};
 		   function dialog(b){
 	 		  	layer.alert(b, {
 	 		  		title:"提示",

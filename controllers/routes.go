@@ -22,4 +22,6 @@ func steupRoutes() {
 	http.HandleFunc("/explain/delete", explainDelete)
 	http.HandleFunc("/login_submit", loginSubmit)
 	http.HandleFunc("/update/log/find", updateLogFind)
+	http.HandleFunc("/project", findProject)
+	http.HandleFunc("/project/version", findProjectVersion)
 }

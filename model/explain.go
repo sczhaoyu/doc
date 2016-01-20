@@ -12,6 +12,8 @@ type Explain struct {
 	DescriptionText string    `json:"descriptionText"` //描述
 	UserName        string    `json:"userName"`        //发布人
 	CreatedAt       time.Time `json:"createdAt"`       //发布时间
+	ProjectId       int64     `json:"projectId"`       //项目的ID
+	VersionId       int64     `json:"versionId"`       //版本的ID
 }
 
 func FindExplain() ([]Explain, error) {

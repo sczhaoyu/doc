@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50173
 File Encoding         : 65001
 
-Date: 2016-01-15 14:37:48
+Date: 2016-01-20 14:55:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,6 +37,8 @@ CREATE TABLE `catalogue` (
   `parent_id` int(11) NOT NULL COMMENT '父目录，没有为0',
   `name` varchar(255) NOT NULL COMMENT '目录名称',
   `serial_number` varchar(255) NOT NULL COMMENT '序号',
+  `project_id` int(11) NOT NULL DEFAULT '0' COMMENT '所属项目',
+  `version_id` int(11) NOT NULL DEFAULT '0' COMMENT '所属版本号',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='文档目录';
 
@@ -53,8 +55,10 @@ CREATE TABLE `doc` (
   `out_demo` text NOT NULL COMMENT '输出示例',
   `name` varchar(255) NOT NULL,
   `serial_number` varchar(255) NOT NULL,
+  `project_id` int(11) NOT NULL DEFAULT '0' COMMENT '所属项目ID',
+  `version_id` int(11) NOT NULL DEFAULT '0' COMMENT '所属版本号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for err_code
@@ -64,8 +68,10 @@ CREATE TABLE `err_code` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(255) NOT NULL COMMENT '错误代码',
   `description_text` text NOT NULL COMMENT '描述',
+  `project_id` int(11) NOT NULL DEFAULT '0' COMMENT '所属项目ID',
+  `version_id` int(11) NOT NULL DEFAULT '0' COMMENT '所属版本号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for explain
@@ -77,8 +83,10 @@ CREATE TABLE `explain` (
   `description_text` text NOT NULL COMMENT '描述',
   `user_name` varchar(255) NOT NULL COMMENT '发布人',
   `created_at` datetime NOT NULL,
+  `project_id` int(11) NOT NULL DEFAULT '0' COMMENT '所属项目ID',
+  `version_id` int(11) NOT NULL COMMENT '版本ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for parameters
@@ -94,8 +102,20 @@ CREATE TABLE `parameters` (
   `prm_type` tinyint(4) NOT NULL COMMENT '0请求参数1响应参数',
   `length` varchar(11) NOT NULL,
   `serial_number` varchar(255) NOT NULL,
+  `project_id` int(11) NOT NULL DEFAULT '0' COMMENT '所属项目ID',
+  `version_id` int(11) NOT NULL DEFAULT '0' COMMENT '所属版本号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=237 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for project
+-- ----------------------------
+DROP TABLE IF EXISTS `project`;
+CREATE TABLE `project` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL COMMENT '项目名称',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for update_log
@@ -105,5 +125,18 @@ CREATE TABLE `update_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `description_text` text NOT NULL COMMENT '更新说明',
   `created_at` datetime NOT NULL,
+  `project_id` int(11) NOT NULL DEFAULT '0' COMMENT '所属项目ID',
+  `version_id` int(11) NOT NULL COMMENT '版本的ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for version
+-- ----------------------------
+DROP TABLE IF EXISTS `version`;
+CREATE TABLE `version` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `version` varchar(255) NOT NULL COMMENT '版本号',
+  `project_id` int(11) NOT NULL COMMENT '项目的ID',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

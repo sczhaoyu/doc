@@ -15,6 +15,8 @@ type Parameters struct {
 	PrmType         int    `json:"prmType"`         //0请求参数1响应参数
 	Length          string `json:"length"`          //数据长度
 	SerialNumber    string `json:"serialNumber"`    //序号
+	ProjectId       int64  `json:"projectId"`       //项目的ID
+	VersionId       int64  `json:"versionId"`       //版本的ID
 }
 
 func DeleteParameters(docId int64) error {

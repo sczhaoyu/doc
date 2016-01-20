@@ -9,6 +9,8 @@ type ErrCode struct {
 	Id              int64  `json:"errCodeid"`
 	Code            string `json:"code"`            //错误代码
 	DescriptionText string `json:"descriptionText"` //描述
+	ProjectId       int64  `json:"projectId"`       //项目的ID
+	VersionId       int64  `json:"versionId"`       //版本的ID
 }
 
 func (e *ErrCode) Save() error {
@@ -37,9 +39,9 @@ func (e *ErrCode) Update() error {
 	_, err := DocDB.Where("id=?", e.Id).Update(e)
 	return err
 }
-func FindErrCode() ([]ErrCode, error) {
+func FindErrCode(projectId int64) ([]ErrCode, error) {
 	var ret []ErrCode
-	err := DocDB.OrderBy("(code+0) asc").Find(&ret)
+	err := DocDB.Where("project_id=?", projectId).OrderBy("(code+0) asc").Find(&ret)
 	if err != nil {
 		return nil, err
 	}

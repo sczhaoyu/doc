@@ -14,6 +14,8 @@ type Doc struct {
 	OutDemo         string `json:"outDemo"`         //输出示例
 	Name            string `json:"name"`            //文档名称
 	SerialNumber    string `json:"serialNumber"`    //序号
+	ProjectId       int64  `json:"projectId"`       //项目的ID
+	VersionId       int64  `json:"versionId"`       //版本的ID
 }
 
 func FindDoc(catalogueId int64) ([]Doc, error) {

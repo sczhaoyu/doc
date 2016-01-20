@@ -9,7 +9,9 @@ import (
 
 //获取全部父目录
 func getCatalogueAll(w http.ResponseWriter, r *http.Request) {
-	ret, err := model.FindCatalogueAllParent()
+	projectId, _ := strconv.ParseInt(r.FormValue("projectId"), 10, 64)
+	versionId, _ := strconv.ParseInt(r.FormValue("versionId"), 10, 64)
+	ret, err := model.FindCatalogueAllParent(projectId, versionId)
 	if err != nil {
 		w.Write(ToJson(err))
 		return
@@ -20,7 +22,9 @@ func getCatalogueAll(w http.ResponseWriter, r *http.Request) {
 //获取父目录的子目录
 func getCatalogueChild(w http.ResponseWriter, r *http.Request) {
 	catalogueId, _ := strconv.ParseInt(r.FormValue("catalogueId"), 10, 64)
-	ret, err := model.FindFindCatalogueByParent(catalogueId)
+	projectId, _ := strconv.ParseInt(r.FormValue("projectId"), 10, 64)
+	versionId, _ := strconv.ParseInt(r.FormValue("versionId"), 10, 64)
+	ret, err := model.FindFindCatalogueByParent(projectId, versionId, catalogueId)
 	if err != nil {
 		w.Write(ToJson(err))
 		return
@@ -75,11 +79,11 @@ func catalogueSubmit(w http.ResponseWriter, r *http.Request) {
 		err = p.Doc.Update()
 		if err == nil {
 			//添加操作日志
-			model.AddUpdateLog("修改文档【" + p.Doc.Name + ":" + p.Doc.SerialNumber + "】")
+			model.AddUpdateLog("修改文档【"+p.Doc.Name+":"+p.Doc.SerialNumber+"】", p.Doc.ProjectId, p.Doc.VersionId)
 			err = model.DeleteParameters(p.Doc.Id)
 		}
 	} else {
-		model.AddUpdateLog("增加文档【" + p.Doc.Name + ":" + p.Doc.SerialNumber + "】")
+		model.AddUpdateLog("增加文档【"+p.Doc.Name+":"+p.Doc.SerialNumber+"】", p.Doc.ProjectId, p.Doc.VersionId)
 		err = p.Doc.Save()
 	}
 
@@ -92,12 +96,16 @@ func catalogueSubmit(w http.ResponseWriter, r *http.Request) {
 		p.RspParameters[i].Id = 0
 		p.RspParameters[i].PrmType = 1
 		p.RspParameters[i].DocId = p.Doc.Id
+		p.RspParameters[i].ProjectId = p.Doc.ProjectId
+		p.RspParameters[i].VersionId = p.Doc.VersionId
 		prm = append(prm, p.RspParameters[i])
 	}
 	for i := 0; i < len(p.ReqParameters); i++ {
 		p.ReqParameters[i].Id = 0
 		p.ReqParameters[i].PrmType = 0
 		p.ReqParameters[i].DocId = p.Doc.Id
+		p.ReqParameters[i].ProjectId = p.Doc.ProjectId
+		p.ReqParameters[i].VersionId = p.Doc.VersionId
 		prm = append(prm, p.ReqParameters[i])
 	}
 	if len(prm) > 0 {
