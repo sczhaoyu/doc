@@ -16,9 +16,9 @@ type Explain struct {
 	VersionId       int64     `json:"versionId"`       //版本的ID
 }
 
-func FindExplain() ([]Explain, error) {
+func FindExplain(projectId, versionId int64) ([]Explain, error) {
 	var ret []Explain
-	err := DocDB.Find(&ret)
+	err := DocDB.Where("project_id=? and version_id=?", projectId, versionId).Desc("created_at").Find(&ret)
 	if err != nil {
 		return nil, err
 	}

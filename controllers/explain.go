@@ -33,7 +33,9 @@ func explainSubmit(w http.ResponseWriter, r *http.Request) {
 	w.Write(ToJson(err))
 }
 func explainFind(w http.ResponseWriter, r *http.Request) {
-	ret, err := model.FindExplain()
+	projectId, _ := strconv.ParseInt(r.FormValue("projectId"), 10, 64)
+	versionId, _ := strconv.ParseInt(r.FormValue("versionId"), 10, 64)
+	ret, err := model.FindExplain(projectId, versionId)
 	if err != nil {
 		w.Write(ToJson(err))
 		return
