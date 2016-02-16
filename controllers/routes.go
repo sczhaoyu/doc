@@ -8,6 +8,7 @@ func steupRoutes() {
 	http.HandleFunc("/", index)
 	http.HandleFunc("/catalogue/all", getCatalogueAll)
 	http.HandleFunc("/catalogue/child", getCatalogueChild)
+	http.HandleFunc("/catalogue/save", saveCatalogue)
 	http.HandleFunc("/catalogue/find/doc", findDoc)
 	http.HandleFunc("/catalogue/doc", getCatalogueDoc)
 	http.HandleFunc("/catalogue/submit", catalogueSubmit)
@@ -24,4 +25,8 @@ func steupRoutes() {
 	http.HandleFunc("/update/log/find", updateLogFind)
 	http.HandleFunc("/project", findProject)
 	http.HandleFunc("/project/version", findProjectVersion)
+	//保存项目版本
+	http.HandleFunc("/project/version/save", saveProjectVersion)
+	//克隆版本
+	http.HandleFunc("/project/version/clone", cloneProjectVersion)
 }

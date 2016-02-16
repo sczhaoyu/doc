@@ -2,10 +2,32 @@ package controllers
 
 import (
 	"encoding/json"
+	"errors"
 	"github.com/sczhaoyu/doc/model"
 	"net/http"
 	"strconv"
+	"strings"
 )
+
+func saveCatalogue(w http.ResponseWriter, r *http.Request) {
+	projectId, _ := strconv.ParseInt(r.FormValue("projectId"), 10, 64)
+	versionId, _ := strconv.ParseInt(r.FormValue("versionId"), 10, 64)
+	var c model.Catalogue
+	c.Name = strings.Trim(r.FormValue("name"), " ")
+	c.ProjectId = projectId
+	c.SerialNumber = strings.Trim(r.FormValue("serialNumber"), " ")
+	c.VersionId = versionId
+	if c.Name == "" {
+		w.Write(ToJson(errors.New("目录名称不能为空！")))
+		return
+	}
+	if c.SerialNumber == "" {
+		w.Write(ToJson(errors.New("目录序号不能为空！")))
+		return
+	}
+	w.Write(ToJson(c.Save()))
+
+}
 
 //获取全部父目录
 func getCatalogueAll(w http.ResponseWriter, r *http.Request) {

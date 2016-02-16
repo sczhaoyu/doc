@@ -7,7 +7,7 @@ import (
 
 type Doc struct {
 	Id              int64  `json:"docId"`           //主键
-	CatalogueId     int    `json:"catalogueId"`     //所属目录
+	CatalogueId     int64  `json:"catalogueId"`     //所属目录
 	Path            string `json:"path"`            //接口请求路径
 	DescriptionText string `json:"descriptionText"` //接口介绍
 	InputDemo       string `json:"inputDemo"`       //输入示例

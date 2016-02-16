@@ -20,9 +20,9 @@ var (
 
 func init() {
 	//====================================================================
-	url := "root:s&^%j(h0)#t-+2015@tcp(101.201.150.0:3306)/"
+	url := "root:root_sjht!@#$133@tcp(101.200.215.133:3306)/"
 	if os.Getenv("GO_DEV") == "2" {
-		url = "root:s&^%j(h0)#t-+2015@tcp(localhost:3306)/"
+		url = "root:root_sjht!@#$133@tcp(localhost:3306)/"
 	}
 	DocDB, _ = xorm.NewEngine("mysql", url+"doc?charset=utf8")
 	if os.Getenv("GO_DEV") == "1" {

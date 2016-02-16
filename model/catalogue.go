@@ -14,6 +14,16 @@ type Catalogue struct {
 	VersionId    int64  `json:"versionId"`    //版本的ID
 }
 
+//获取全部目录
+func FindCatalogueAll(projectId, versionId int64) ([]Catalogue, error) {
+	var ret []Catalogue
+	err := DocDB.Where("project_id=? and version_id=?", projectId, versionId).Find(&ret)
+	if err != nil {
+		return nil, err
+	}
+	return ret, NoDataMsg(len(ret) > 0, "catalogue[] null")
+}
+
 //获取全部父目录
 func FindCatalogueAllParent(projectId, versionId int64) ([]Catalogue, error) {
 	var ret []Catalogue
