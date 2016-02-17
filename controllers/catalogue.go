@@ -62,6 +62,22 @@ func findDoc(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write(ToJson(ret))
 }
+func copyCatalogueDoc(w http.ResponseWriter, r *http.Request) {
+	docId, _ := strconv.ParseInt(r.FormValue("docId"), 10, 64)
+	catalogueId, _ := strconv.ParseInt(r.FormValue("catalogueId"), 10, 64)
+	name := r.FormValue("name")
+	serialNumber := r.FormValue("serialNumber")
+	w.Write(ToJson(model.CopyDoc(docId, catalogueId, name, serialNumber)))
+
+}
+
+func deleteCatalogueDoc(w http.ResponseWriter, r *http.Request) {
+	docId, _ := strconv.ParseInt(r.FormValue("docId"), 10, 64)
+	var doc model.Doc
+	doc.Id = docId
+	w.Write(ToJson(doc.Delete()))
+
+}
 
 //获取文档详情
 func getCatalogueDoc(w http.ResponseWriter, r *http.Request) {

@@ -11,6 +11,8 @@ func steupRoutes() {
 	http.HandleFunc("/catalogue/save", saveCatalogue)
 	http.HandleFunc("/catalogue/find/doc", findDoc)
 	http.HandleFunc("/catalogue/doc", getCatalogueDoc)
+	http.HandleFunc("/catalogue/doc/copy", copyCatalogueDoc)
+	http.HandleFunc("/catalogue/doc/delete", deleteCatalogueDoc)
 	http.HandleFunc("/catalogue/submit", catalogueSubmit)
 	http.HandleFunc("/parameter/update", updateParameter)
 	http.HandleFunc("/parameter/delete", deleteParameter)

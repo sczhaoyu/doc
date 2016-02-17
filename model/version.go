@@ -64,7 +64,7 @@ func CopyVersion(projectId, oldVersionId, versionId int64) error {
 
 						for k := 0; k < len(prms); k++ {
 							prms[k].Id = 0
-							prms[k].DocId = docId
+							prms[k].DocId = docs[j].Id
 							prms[k].VersionId = versionId
 							_, prmInsertErr := session.Insert(prms[k])
 							if prmInsertErr != nil {

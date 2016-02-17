@@ -40,6 +40,16 @@ func index(w http.ResponseWriter, r *http.Request) {
 				    closeBtn: 0
 				});
 		   }
+		   function loading(t) {
+		   	 layer.msg(t,{
+				time:0,
+				shade: [0.4, '#000'],
+				icon: 16 
+			 });
+		   } 
+		   function loadingClose() {
+		   	  layer.closeAll('loading');
+		   }
 		</script>
 	</head>
 	<body>
