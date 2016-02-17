@@ -53,7 +53,7 @@ func CopyVersion(projectId, oldVersionId, versionId int64) error {
 					docs[j].CatalogueId = c[i].Id
 					docs[j].Id = 0                //将ID设置为0
 					docs[j].VersionId = versionId //设置文档的版本
-					_, docInsertErr := session.Insert(docs[j])
+					_, docInsertErr := session.Insert(&docs[j])
 					if docInsertErr != nil {
 						//出错 回滚
 						session.Rollback()
