@@ -14,6 +14,42 @@ type Catalogue struct {
 	VersionId    int64  `json:"versionId"`    //版本的ID
 }
 
+//删除目录
+func DeleteCatalogue(id int64) error {
+	session := DocDB.NewSession()
+	defer session.Close()
+	session.Begin() //开启事务
+	//删除目录
+	_, cErr := session.Where("id=?", id).Delete(Catalogue{})
+	if cErr != nil {
+		session.Rollback()
+		return cErr
+	}
+	doc, err := FindDoc(id)
+	var docId []int64 = make([]int64, 0, len(doc))
+	//删除文档
+	if err == nil {
+		for i := 0; i < len(doc); i++ {
+			docId = append(docId, doc[i].Id)
+			_, docDelerr := session.Where("id=?", doc[i].Id).Delete(Doc{})
+			if docDelerr != nil {
+				session.Rollback()
+				return docDelerr
+			}
+		}
+	}
+	//删除参数
+	if len(docId) > 0 {
+		_, prmDelErr := session.In("doc_id", docId).Delete(Parameters{})
+		if prmDelErr != nil {
+			session.Rollback()
+			return prmDelErr
+		}
+	}
+	return session.Commit()
+
+}
+
 //获取全部目录
 func FindCatalogueAll(projectId, versionId int64) ([]Catalogue, error) {
 	var ret []Catalogue

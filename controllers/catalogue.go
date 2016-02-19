@@ -9,6 +9,17 @@ import (
 	"strings"
 )
 
+func updateVersion(w http.ResponseWriter, r *http.Request) {
+	versionId, _ := strconv.ParseInt(r.FormValue("versionId"), 10, 64)
+	v, err := model.GetVersionById(versionId)
+	if err != nil {
+		w.Write(ToJson(err))
+		return
+	}
+	v.Version = r.FormValue("version")
+	w.Write(ToJson(v.Update()))
+
+}
 func saveCatalogue(w http.ResponseWriter, r *http.Request) {
 	projectId, _ := strconv.ParseInt(r.FormValue("projectId"), 10, 64)
 	versionId, _ := strconv.ParseInt(r.FormValue("versionId"), 10, 64)
@@ -27,6 +38,25 @@ func saveCatalogue(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write(ToJson(c.Save()))
 
+}
+func updateCatalogue(w http.ResponseWriter, r *http.Request) {
+	catalogueId, _ := strconv.ParseInt(r.FormValue("catalogueId"), 10, 64)
+	c, err := model.GetCatalogueById(catalogueId)
+	if err != nil {
+		w.Write(ToJson(err))
+		return
+	}
+	c.Name = r.FormValue("name")
+	c.SerialNumber = r.FormValue("serialNumber")
+	if c.Name == "" || c.SerialNumber == "" {
+		w.Write(ToJson(errors.New("目录编号和目录名称不能为空！")))
+		return
+	}
+	w.Write(ToJson(c.Update()))
+}
+func deleteCatalogue(w http.ResponseWriter, r *http.Request) {
+	catalogueId, _ := strconv.ParseInt(r.FormValue("catalogueId"), 10, 64)
+	w.Write(ToJson(model.DeleteCatalogue(catalogueId)))
 }
 
 //获取全部父目录

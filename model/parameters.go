@@ -23,6 +23,7 @@ func DeleteParameters(docId int64) error {
 	_, err := DocDB.Where("doc_id=?", docId).Delete(Parameters{})
 	return err
 }
+
 func SaveParameters(ret []Parameters) error {
 	_, err := DocDB.Insert(ret)
 	return err

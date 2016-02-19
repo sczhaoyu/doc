@@ -6,6 +6,9 @@ import (
 
 func steupRoutes() {
 	http.HandleFunc("/", index)
+	http.HandleFunc("/version/update_version", updateVersion)
+	http.HandleFunc("/catalogue/updateCatalogue", updateCatalogue)
+	http.HandleFunc("/catalogue/deleteCatalogue", deleteCatalogue)
 	http.HandleFunc("/catalogue/all", getCatalogueAll)
 	http.HandleFunc("/catalogue/child", getCatalogueChild)
 	http.HandleFunc("/catalogue/save", saveCatalogue)
