@@ -14,8 +14,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 		data, _ := json.Marshal(sessionLogin)
 		j = string(data)
 	}
-	css := "http://cdn.centwaytech.com/docapi/20160217152355/bundle.css"
-	js := "http://cdn.centwaytech.com/docapi/20160217152355/bundle.js"
+	css := "http://cdn.centwaytech.com/docapi/201606021129/bundle.css"
+	js := "http://cdn.centwaytech.com/docapi/201606021129/bundle.js"
 	if os.Getenv("GO_DEV") == "1" {
 		css = "http://localhost:3000/build/bundle.css"
 		js = "http://localhost:3000/build/bundle.js"

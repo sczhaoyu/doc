@@ -53,7 +53,7 @@ func DeleteCatalogue(id int64) error {
 //获取全部目录
 func FindCatalogueAll(projectId, versionId int64) ([]Catalogue, error) {
 	var ret []Catalogue
-	err := DocDB.Where("project_id=? and version_id=?", projectId, versionId).Find(&ret)
+	err := DocDB.Where("project_id=? and version_id=?", projectId, versionId).OrderBy("(serial_number+0)  asc").Find(&ret)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func FindCatalogueAll(projectId, versionId int64) ([]Catalogue, error) {
 //获取全部父目录
 func FindCatalogueAllParent(projectId, versionId int64) ([]Catalogue, error) {
 	var ret []Catalogue
-	err := DocDB.Where("parent_id=? and project_id=? and version_id=?", 0, projectId, versionId).Find(&ret)
+	err := DocDB.Where("parent_id=? and project_id=? and version_id=?", 0, projectId, versionId).OrderBy("(serial_number+0)  asc").Find(&ret)
 	if err != nil {
 		return nil, err
 	}

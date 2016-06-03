@@ -18,7 +18,7 @@ type Doc struct {
 	VersionId       int64  `json:"versionId"`       //版本的ID
 }
 
-func CopyDoc(docId, catalogueId int64, name, serialNumber string) error {
+func CopyDoc(docId, catalogueId, projectId, versionId int64, name, serialNumber string) error {
 	session := DocDB.NewSession()
 	defer session.Close()
 	err := session.Begin()
@@ -33,6 +33,8 @@ func CopyDoc(docId, catalogueId int64, name, serialNumber string) error {
 	doc.Id = 0
 	doc.CatalogueId = catalogueId
 	doc.Name = name
+	doc.ProjectId = projectId
+	doc.VersionId = versionId
 	doc.SerialNumber = serialNumber
 	_, docInsertErr := session.Insert(doc)
 	if docInsertErr != nil {

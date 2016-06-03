@@ -95,9 +95,15 @@ func findDoc(w http.ResponseWriter, r *http.Request) {
 func copyCatalogueDoc(w http.ResponseWriter, r *http.Request) {
 	docId, _ := strconv.ParseInt(r.FormValue("docId"), 10, 64)
 	catalogueId, _ := strconv.ParseInt(r.FormValue("catalogueId"), 10, 64)
+	versionId, _ := strconv.ParseInt(r.FormValue("versionId"), 10, 64)
+	projectId, _ := strconv.ParseInt(r.FormValue("projectId"), 10, 64)
 	name := r.FormValue("name")
 	serialNumber := r.FormValue("serialNumber")
-	w.Write(ToJson(model.CopyDoc(docId, catalogueId, name, serialNumber)))
+	if catalogueId <= 0 || versionId <= 0 || projectId <= 0 {
+		w.Write(ToJson(errors.New("参数错误！")))
+		return
+	}
+	w.Write(ToJson(model.CopyDoc(docId, catalogueId, projectId, versionId, name, serialNumber)))
 
 }
 
