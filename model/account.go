@@ -14,6 +14,7 @@ type Account struct {
 	CreatedAt time.Time `json:"createdAt"`
 }
 
+//获取帐号信息
 func GetAccount(account, password string) (*Account, error) {
 	var ret Account
 	b, err := DocDB.Where("account=? and password=?", account, password).Get(&ret)
